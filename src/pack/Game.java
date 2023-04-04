@@ -12,49 +12,62 @@ import javax.swing.JFrame;
 
 public class Game implements Runnable
 {
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 800;
-	public static final int POINTS_BOARD_HEIGHT = 80;
-	public static final String NAME = "Warcaby";
-	public static final int WINNING_MESSAGE_WIDTH = 350;
-	public static final int WINNING_MESSAGE_HEIGHT = 60;
-
-	private JFrame frame;
-	private Canvas canvas;
-	private boolean isRunning;
-	private Thread thread;
-	private Map map;
-	private KeyManager keyManager;
-	private MouseManager mouseManager;
-	private Font font;
-
+	/* PRIVATE CONSTANTS */
+	
+	private static final short  WIDTH                  = 800;        /* Width of the windows */
+	private static final short  HEIGHT                 = 800;        /* Height of the window */
+	private static final short  POINTS_AREA_HEIGHT     = 80;         /* Height of the area below the Map, intended for displaying the points of both players */
+	private static final short  WINNING_MESSAGE_WIDTH  = 350;        /* Width of the message, which is shown when one of the players wins */
+	private static final short  WINNING_MESSAGE_HEIGHT = 60;         /* Height of the message, which is shown when one of the players wins */
+	private static final String WINDOW_NAME            = "Checkers"; /* Name of the game window */
+	private static final String FONT_NAME              = "Arial";    /* Name or type of the font used in the game */
+	private static final byte   FONT_SIZE              = 30;         /* Size of the font used in the game */
+	
+	/* END OF PRIVATE CONSTANTS */
+	
+	
+	/* PRIVATE VARIABLES */
+	
+	private boolean      isRunning;    /* Flag, which is raised, as long as the application is running */
+	private JFrame       frame;        /* Object of the frame */
+	private Canvas       canvas;       /* Object of the canvas */
+	private Thread       thread;       /* Main thread */
+	private Map          map;          /* Object of the game map */
+	private KeyManager   keyManager;   /* Object of the key manager */
+	private MouseManager mouseManager; /* Object of the mouse manager */
+	private Font         font;         /* The rendered font */
+	
+	/* END OF PRIVATE VARIABLES */
+	
+	
+	/**
+	 * The main class's constructor
+	 */
 	public Game()
 	{
-		font = new Font("Arial", Font.BOLD, 30);
-
-		frame = new JFrame("Warcaby");
-		canvas = new Canvas();
-		keyManager = new KeyManager();
+		font         = new Font(FONT_NAME, Font.BOLD, FONT_SIZE);
+		frame        = new JFrame(WINDOW_NAME);
+		canvas       = new Canvas();
+		keyManager   = new KeyManager();
 		mouseManager = new MouseManager(this);
+		map          = new Map();
 
-		canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT + POINTS_BOARD_HEIGHT));
+		canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT + POINTS_AREA_HEIGHT));
 		canvas.setEnabled(true);
 		canvas.setFocusable(false);
 		canvas.addMouseListener(mouseManager);
+		
 		frame.add(canvas);
 		frame.pack();
+		
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.addKeyListener(keyManager);
-
-		map = new Map();
-
-		start();
 	}
 
-	private void start()
+	public void start()
 	{
 		isRunning = true;
 		thread = new Thread(this);
@@ -83,14 +96,13 @@ public class Game implements Runnable
 		{
 			while(isRunning)
 			{
-//				System.out.println("running...");
 				tick();
 				render();
 			}
 		}
 		catch(Exception e)
 		{
-
+			e.printStackTrace();
 		}
 	}
 
@@ -100,27 +112,28 @@ public class Game implements Runnable
 			stop();
 	}
 
-	/* throws something, don't touch */
+	/* Throws something, don't touch */
 	private void render() throws IllegalStateException
 	{
 		BufferStrategy bs = canvas.getBufferStrategy();
+		
 		if (bs == null)
 		{
 			canvas.createBufferStrategy(2);
 			bs = canvas.getBufferStrategy();
 		}
-
+		
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 
 		// draw
 		g.setBackground(new Color(150, 150, 150));
-		g.clearRect(0, 0, WIDTH, HEIGHT + POINTS_BOARD_HEIGHT);
+		g.clearRect(0, 0, WIDTH, HEIGHT + POINTS_AREA_HEIGHT);
 		g.setFont(font);
 		g.drawString(String.format("Punkty gracza bialego: %d", map.getPunktyBialego()), 0, HEIGHT + 30);
 		g.drawString(String.format("Punkty gracza czarnego: %d", map.getPunktyCzarnego()), 0, HEIGHT + 70);
 		map.render(g);
 
-		// game has ended, the white player has won
+		/* The game has ended, white player has won */
 		if (map.getPunktyBialego() == 12)
 		{
 			g.setColor(Color.yellow);
@@ -128,7 +141,7 @@ public class Game implements Runnable
 			g.setColor(Color.red);
 			g.drawString("Bialy gracz wygrywa!", (WIDTH - WINNING_MESSAGE_WIDTH) / 2 + 25, (HEIGHT - WINNING_MESSAGE_HEIGHT) / 2 + 40);
 		}
-//		// game has ended, the black player has won
+		/* The game has ended, black player has won */
 		else if (map.getPunktyCzarnego() == 12)
 		{
 			g.setColor(Color.yellow);

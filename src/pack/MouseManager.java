@@ -3,10 +3,17 @@ package pack;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * This class implements the MouseListener interface and listens for mouse events.
+ */
 public class MouseManager implements MouseListener
 {
-	private Game game;
+	private Game game; /* The game object responsible for handling the click events. */
 
+	/**
+	 * Creates a new instance of the MouseManager class.
+	 * @param game The Game object that this MouseManager is associated with.
+	 */
 	public MouseManager(Game game)
 	{
 		this.game = game;

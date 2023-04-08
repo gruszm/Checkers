@@ -3,6 +3,9 @@ package pack;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+/**
+ * Represents a tile on the map.
+ */
 public class Tile
 {
 	/* PUBLIC CONSTANTS */
@@ -17,8 +20,8 @@ public class Tile
 	
 	/* PRIVATE VARIABLES */
 	
-	private int x; /* X coordinate of a tile */
-	private int y; /* Y coordinate of a tile */
+	private int x; /* x-coordinate of a tile */
+	private int y; /* y-coordinate of a tile */
 
 	/* END OF PRIVATE VARIABLES */
 	
@@ -45,8 +48,8 @@ public class Tile
 	}
 
 	/**
-	 * Returns the X coordinate of a tile.
-	 * @return X coordinate of a tile.
+	 * Returns the x-coordinate of a tile.
+	 * @return x-coordinate of a tile.
 	 */
 	public int getX()
 	{
@@ -54,8 +57,8 @@ public class Tile
 	}
 
 	/**
-	 * Returns the Y coordinate of a tile.
-	 * @return Y coordinate of a tile.
+	 * Returns the y-coordinate of a tile.
+	 * @return y-coordinate of a tile.
 	 */
 	public int getY()
 	{

@@ -122,12 +122,12 @@ public class Map
 		byte absRangeX = (byte) Math.abs(pawn.getX() - targetTile.getX());
 		byte rangeY = (byte) (targetTile.getY() - pawn.getY());
 
-		if ((1 == absRangeX && (-1 == rangeY && (1 == pawn.getDirection() || pawn.isDamka())) || (1 == rangeY && (0 == pawn.getDirection() || pawn.isDamka())) && isTileEmpty(targetTile)))
+		if ((1 == absRangeX && (-1 == rangeY && (1 == pawn.getDirection() || pawn.isKing())) || (1 == rangeY && (0 == pawn.getDirection() || pawn.isKing())) && isTileEmpty(targetTile)))
 		{
 			return true;
 		}
-		else if (2 == absRangeX && (-2 == rangeY && (1 == pawn.getDirection() || true == czyByloBicie || pawn.isDamka())
-				|| 2 == rangeY && (0 == pawn.getDirection() || true == czyByloBicie || pawn.isDamka()) && isTileEmpty(targetTile)))
+		else if (2 == absRangeX && (-2 == rangeY && (1 == pawn.getDirection() || true == czyByloBicie || pawn.isKing())
+				|| 2 == rangeY && (0 == pawn.getDirection() || true == czyByloBicie || pawn.isKing()) && isTileEmpty(targetTile)))
 		{
 			byte xBetween = (byte) ((pawn.getX() + targetTile.getX()) / 2);
 			byte yBetween = (byte) ((pawn.getY() + targetTile.getY()) / 2);
@@ -245,7 +245,7 @@ public class Map
 
 					if ((pawnSelected.getPawnType() == PawnType.BLACK && pawnSelected.getY() == 7) || (pawnSelected.getPawnType() == PawnType.WHITE && pawnSelected.getY() == 0))
 					{
-						pawnSelected.setDamka(true);
+						pawnSelected.setKing(true);
 					}
 
 					czyByloBicie = false;
@@ -274,7 +274,7 @@ public class Map
 
 					if ((pawnSelected.getPawnType() == PawnType.BLACK && pawnSelected.getY() == 7) || (pawnSelected.getPawnType() == PawnType.WHITE && pawnSelected.getY() == 0))
 					{
-						pawnSelected.setDamka(true);
+						pawnSelected.setKing(true);
 					}
 
 					if (false == czyJestMozliweKolejneBicie(pawnSelected))

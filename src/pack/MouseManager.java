@@ -5,16 +5,17 @@ import java.awt.event.MouseListener;
 
 public class MouseManager implements MouseListener
 {
-	Game game;
-	int x, y;
+	private Game game;
 
 	public MouseManager(Game game)
 	{
 		this.game = game;
-		x = -1;
-		y = -1;
 	}
 
+	/**
+	 * Called when the mouse is clicked. Delegates the click event to the Game class.
+	 * @param mouseEvent The MouseEvent object representing the click event.
+	 */
 	@Override
 	public void mouseClicked(MouseEvent mouseEvent)
 	{

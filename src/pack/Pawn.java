@@ -5,29 +5,43 @@ import java.awt.Graphics2D;
 
 public class Pawn
 {
+	/* PUBLIC CONSTANTS */
+	
+	/**
+	 * Radius of the circle, which represents a pawn on the map.
+	 */
 	public static final int RADIUS = 70;
+	
+	/* END OF PUBLIC CONSTANTS */
 
-	private PawnType pawnType;
-	private int x;
-	private int y;
-	private Color almostBlack;
-	private int direction; // 0 = down, 1 = up
-	private boolean damka;
+	/* PRIVATE VARIABLES */
+	
+	private PawnType pawnType; /* Type of the pawn (black, white) */
+	private Color almostBlack; /* Color of a black pawn other than black */
+	private int x;             /* X coordinate on the map */
+	private int y;             /* Y coordinate on the map */
+	private int direction;     /* Direction of the pawn, 0 means down, 1 means up */
+	private boolean king;      /* Flag, which tells, if the pawn is a king */
+	
+	/* END OF PRIVATE VARIABLES */
 
+	/**
+	 * Creates a new Pawn object with the given type, position, and direction.
+	 * 
+	 * @param pawnType The type of pawn (either BLACK or WHITE).
+	 * @param x The x-coordinate of the pawn's position on the board.
+	 * @param y The y-coordinate of the pawn's position on the board.
+	 * @param direction The direction in which the pawn is facing (either up or down).
+	 */
 	public Pawn(PawnType pawnType, int x, int y, int direction)
 	{
 		this.pawnType = pawnType;
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
-		this.damka = false;
+		this.king = false;
 
 		almostBlack = new Color(80, 80, 80);
-	}
-
-	public void tick()
-	{
-
 	}
 
 	public void render(Graphics2D g)
@@ -39,7 +53,7 @@ public class Pawn
 
 		g.fillOval(x * Tile.SIZE + (Tile.SIZE - RADIUS) / 2, y * Tile.SIZE + (Tile.SIZE - RADIUS) / 2, RADIUS, RADIUS);
 
-		if (isDamka())
+		if (isKing())
 		{
 			g.setColor(Color.yellow);
 
@@ -85,14 +99,14 @@ public class Pawn
 		this.direction = direction;
 	}
 
-	public boolean isDamka()
+	public boolean isKing()
 	{
-		return damka;
+		return king;
 	}
 
-	public void setDamka(boolean damka)
+	public void setKing(boolean king)
 	{
-		this.damka = damka;
+		this.king = king;
 	}
 
 }

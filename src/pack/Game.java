@@ -103,43 +103,53 @@ public class Game implements Runnable
         }
     }
 
+    /**
+     * This method represents the game loop that continuously runs tick and render methods
+     * while the isRunning flag is set to true.
+     */
     @Override
-    public void run()
-    {
-        try
-        {
-            while(isRunning)
-            {
+    public void run() {
+        try {
+            while(isRunning) {
                 tick();
                 render();
             }
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void tick()
-    {
+    /**
+     * This method is called on each game loop iteration to update game logic.
+     * If the ESC key is pressed, the game loop is stopped.
+     */
+    private void tick() {
         if (keyManager.keys[KeyEvent.VK_ESCAPE])
             stop();
     }
 
-    /* Throws something, don't touch */
+    /**
+     * This method renders the current state of the game by drawing the game map and the score of each player on the screen.
+     * It also displays a message if the game has ended and a player has won.
+     *
+     * @throws IllegalStateException if the rendering fails for any reason.
+     */
     private void render() throws IllegalStateException
     {
+    	/* Get the buffer strategy for the canvas */
         BufferStrategy bs = canvas.getBufferStrategy();
         
+        /* If there is no buffer strategy, create one with 2 buffers */
         if (bs == null)
         {
             canvas.createBufferStrategy(2);
             bs = canvas.getBufferStrategy();
         }
         
+        /* Get the graphics object from the buffer strategy */
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 
-        // draw
+        /* Draw the game map and the score of each player on the screen */
         g.setBackground(new Color(150, 150, 150));
         g.clearRect(0, 0, WIDTH, HEIGHT + POINTS_AREA_HEIGHT);
         g.setFont(font);
@@ -147,7 +157,7 @@ public class Game implements Runnable
         g.drawString(String.format("Punkty gracza czarnego: %d", map.getPunktyCzarnego()), 0, HEIGHT + 70);
         map.render(g);
 
-        /* The game has ended, white player has won */
+        /* Check if the game has ended and a player has won, and display a message on the screen */
         if (map.getPunktyBialego() == 12)
         {
             g.setColor(Color.yellow);
@@ -155,7 +165,6 @@ public class Game implements Runnable
             g.setColor(Color.red);
             g.drawString("Bialy gracz wygrywa!", (WIDTH - WINNING_MESSAGE_WIDTH) / 2 + 25, (HEIGHT - WINNING_MESSAGE_HEIGHT) / 2 + 40);
         }
-        /* The game has ended, black player has won */
         else if (map.getPunktyCzarnego() == 12)
         {
             g.setColor(Color.yellow);
@@ -168,6 +177,13 @@ public class Game implements Runnable
         g.dispose();
     }
 
+    /**
+     * This method handles mouse clicks and releases by passing them to the game map.
+     *
+     * @param button the mouse button that was clicked or released.
+     * @param x      the x-coordinate of the mouse cursor.
+     * @param y      the y-coordinate of the mouse cursor.
+     */
     protected void mouseClickedAndReleased(int button, int x, int y)
     {
         map.handleMouseClicked(button, x, y);

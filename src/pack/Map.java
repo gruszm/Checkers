@@ -8,14 +8,24 @@ import java.util.ArrayList;
 
 public class Map
 {
-	public static final int WIDTH = 8;
-	ArrayList<Tile> tiles;
-	ArrayList<Pawn> pawns;
-	Dimension pawnSelectedPosition;
-	byte playerTurn; /* 0 = bottom player, white pawns, 1 = top player, black pawns */
-	private static boolean czyByloBicie = false;
-	private int punktyBialego;
-	private int punktyCzarnego;
+	/* PUBLIC CONSTANTS */
+	
+	public static final int WIDTH = 8; /* Width of the game board */
+
+	/* END OF PUBLIC CONSTANTS */
+	
+
+	/* PRIVATE VARIABLES */
+	
+	private byte playerTurn;                     /* The current player's turn, 0 for white, 1 for black */
+	private int punktyBialego;                   /* The number of points for the white player */
+	private int punktyCzarnego;                  /* The number of points for the black player */
+	private ArrayList<Tile> tiles;               /* List of all the tiles on the board */
+	private ArrayList<Pawn> pawns;               /* List of all the pawns on the board */
+	private Dimension pawnSelectedPosition;      /* The current selected pawn's position */
+	private static boolean czyByloBicie = false; /* Flag to track if there was a capture in the previous move */
+
+	/* END OF PRIVATE VARIABLES */
 
 	public Map()
 	{

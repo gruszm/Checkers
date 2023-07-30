@@ -9,7 +9,11 @@ import java.awt.event.KeyListener;
  */
 public class KeyManager implements KeyListener
 {
+    /* PUBLIC VARIABLES */
+	
 	public boolean[] keys; /* Array of boolean values representing the state of each key */
+	
+    /* END OF PUBLIC VARIABLES */
 
 	/**
 	 * Creates a new KeyManager object with an array of boolean values representing the keys.
